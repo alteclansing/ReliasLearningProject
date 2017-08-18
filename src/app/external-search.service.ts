@@ -17,6 +17,8 @@ import {Observable} from 'rxjs/Observable';
 export class ExternalSearchService {
   // the variable used to hold the abservable object
   private movies: Observable<Movie[]>;
+  // variable used to hold total pages
+  private pages: string;
   // variable used to hold the URL parameters when querying the API
   private extras: URLSearchParams = new URLSearchParams();
   // variable used to hold the API key
@@ -33,13 +35,22 @@ export class ExternalSearchService {
   // receives a string that is received from search-movies.component.ts which ultimately gets it from the search box on
   // the page
   // returns an obserable object that gives us the stream of data that the API returns
-  getMovies(query: string): Observable<Movie[]> {
+  getMovies(query: string, page: string): Observable<Movie[]> {
     // sets the query to the URL param
     this.extras.set('query', query);
+    // sets the page number to search on
+    this.extras.set('page', page);
     // makes the HTTP request and maps the data to be in the format of the movie interface
-    this.movies = this._http.get(this.baseUrl, {search: this.extras}).map((response: Response) => <Movie[]> response.json().results);
+    this.movies = this._http.get(this.baseUrl, {search: this.extras}).map((response: Response) => {
+      this.pages = response.json().total_pages;
+      return <Movie[]> response.json().results
+    });
     // returns the observable
     return this.movies;
   }
+  getPages(): string {
+    return (parseInt(this.pages, 0) * 10).toString();
+  }
+
 
 }

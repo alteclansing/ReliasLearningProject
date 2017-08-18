@@ -6,9 +6,9 @@
 
       <div class="input-group">
         <div class="input-group-addon"><span> <i class="fa fa-search" style="height:11px;"></i></span></div>
-        <input type="text" name="searchBox" placeholder="Search for a Movie..." class="form-control input-lg" id="searchBox" [(ngModel)]="query" #input (keyup.enter)="getMovies(query)" />
+        <input type="text" name="searchBox" placeholder="Search for a Movie..." class="form-control input-lg" id="searchBox" [(ngModel)]="query" #input (keyup.enter)="getMovies(query, page)" />
         <div class="input-group-btn">
-          <button class="btn btn-lg" type="button" id="searchGo" (click)="getMovies(query)">Go! </button>
+          <button class="btn btn-lg" type="button" id="searchGo" (click)="getMovies(query, page)">Go! </button>
         </div>
       </div>
       </form>
@@ -44,8 +44,15 @@
           </div>
         </div>
       </div>
-    </div>
+      <div class="col-md-12" *ngIf="movies?.length > 0">
+        <div class="row justify-content-center">
+          <div class="col-md-3">
+            <ngb-pagination [collectionSize]="getPages()" [(page)]="page" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)" class="mx-auto d-block"></ngb-pagination>
+          </div>
+        </div>
+      </div>
 
+     </div>
   </div>
 <div style="background-color: rgba(51,51,51,0.35);">
   <p style=" margin-bottom: 0px">This product uses the TMDb API but is not endorsed or certified by <a href="https://www.themoviedb.org">TMDb</a></p>
