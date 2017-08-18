@@ -40,6 +40,9 @@ export class SearchMoviesComponent implements OnInit, OnDestroy {
   // gets the movie data by using the ExternalSearchService and passing in the search query, this method is avaliable
   // to call from the model.
   getMovies(queryString: string, page: string) {
+    if (!queryString.match(this.savedQuery)){
+      this.page = '1';
+    }
     this._externalSearch.getMovies(queryString, page).takeUntil(this.ngUnsubscribe)
       .subscribe( movies => this.movies = movies, err => console.error(err));
     this.savedQuery = queryString;
