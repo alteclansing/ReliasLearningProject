@@ -2,6 +2,10 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.2.0.
 
+## Setting Up
+
+using Node.js CLI run the `npm install` command in the projects local directory in order to install and load in the necessary modules for the Angular2 application.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
